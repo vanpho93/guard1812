@@ -4,6 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { MustLoggedInGuard } from './must-logged-in.guard';
+import { MustBeGuestGuard } from './must-be-guest.guard';
+
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -15,11 +18,11 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 const routesConfig: Routes = [
   { path: '', component: HomePageComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'messages', component: MessagesComponent },
-  { path: 'signin', component: SignInComponent },
-  { path: 'signup', component: SignUpComponent },
-  { path: 'password', component: ForgotPasswordComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [MustLoggedInGuard] },
+  { path: 'messages', component: MessagesComponent, canActivate: [MustLoggedInGuard] },
+  { path: 'signin', component: SignInComponent, canActivate: [MustBeGuestGuard] },
+  { path: 'signup', component: SignUpComponent, canActivate: [MustBeGuestGuard] },
+  { path: 'password', component: ForgotPasswordComponent, canActivate: [MustBeGuestGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -40,7 +43,7 @@ const routesConfig: Routes = [
     HttpModule,
     RouterModule.forRoot(routesConfig),
   ],
-  providers: [],
+  providers: [MustLoggedInGuard, MustBeGuestGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
