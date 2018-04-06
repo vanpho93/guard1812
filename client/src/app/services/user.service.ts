@@ -22,6 +22,11 @@ export class UserService {
         });
     }
 
+    signOut() {
+        localStorage.removeItem('token');
+        this.router.navigate(['/signin']);
+    }
+
     check() {
         const token = localStorage.getItem('token');
         const headers = new Headers();
