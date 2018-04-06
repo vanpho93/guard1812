@@ -9,7 +9,9 @@ import { UserService } from './services/user.service';
 })
 
 export class AppComponent {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) {
+    this.userService.check();
+  }
 
   signOut() {
     this.userService.signOut();
