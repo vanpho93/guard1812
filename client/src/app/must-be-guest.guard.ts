@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class MustBeGuestGuard implements CanActivate {
+  constructor(private router: Router) {}
+
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-      return !localStorage.getItem('token');
+    const isGuest = !localStorage.getItem('token')
+    if (!isGuest) this.router.navigate(['/profile']);
+    return isGuest;
   }
 }
