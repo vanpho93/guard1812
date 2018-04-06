@@ -15,10 +15,6 @@ export class SignInComponent implements OnInit {
   }
 
   signIn() {
-    this.userService.signIn('teo@gmail.com', '321')
-    .then(response => {
-      this.token = response.user.token;
-      localStorage.setItem('token', this.token);
-    });
+    this.userService.signIn('teo@gmail.com', '321');
   }
 }
